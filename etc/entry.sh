@@ -18,6 +18,8 @@ bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 
 cd "${STEAMAPPDIR}"
 
+mkdir save-data/Settings
+
 export WINEARCH=win64
 
 xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine VRisingServer.exe -persistentDataPath ./save-data -logFile server.log 

@@ -1,4 +1,4 @@
-FROM cm2network/steamcmd:latest
+FROM cm2network/steamcmd:root
 
 LABEL maintainer="jose.falanga@gmail.com"
 
@@ -12,6 +12,7 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		wine \
+		xvfb \
 		wget=1.21-1+deb11u1 \
 		ca-certificates=20210119 \
 		lib32z1=1:1.2.11.dfsg-2+deb11u1 \
