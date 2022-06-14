@@ -6,6 +6,8 @@ bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 				+app_update "${STEAMAPPID}" \
 				+quit
 
+mkdir "${STEAMAPPDIR}/save-data/Settings" || true  
+
 ##TODO: Get the actual vrising config dynamically
 # Is the config missing?
 # if [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/cfg/server.cfg" ]; then
@@ -17,8 +19,6 @@ bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 # fi
 
 cd "${STEAMAPPDIR}"
-
-mkdir save-data/Settings
 
 export WINEARCH=win64
 
