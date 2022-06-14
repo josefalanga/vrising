@@ -1,9 +1,5 @@
 #!/bin/bash
-echo $PATH
-
-PATH='/usr/local/bin:/usr/bin:/bin'
-
-echo $PATH
+export PATH='/usr/local/bin:/usr/bin:/bin'
 
 mkdir -p "${STEAMAPPDIR}" || true  
 
@@ -28,5 +24,4 @@ cd "${STEAMAPPDIR}"
 
 export WINEARCH=win64
 
-xvfb-run echo "asshole"
-#xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine VRisingServer.exe -persistentDataPath ./save-data -logFile server.log 
+xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine VRisingServer.exe -persistentDataPath ./save-data -logFile server.log 
