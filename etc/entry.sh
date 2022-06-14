@@ -1,4 +1,10 @@
 #!/bin/bash
+echo $PATH
+
+PATH='/usr/local/bin:/usr/bin:/bin'
+
+echo $PATH
+
 mkdir -p "${STEAMAPPDIR}" || true  
 
 bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
