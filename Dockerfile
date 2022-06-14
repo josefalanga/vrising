@@ -6,8 +6,6 @@ ENV STEAMAPPID 1829350
 ENV STEAMAPP vrising-server
 ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
 ENV DLURL https://raw.githubusercontent.com/josefalanga/vrising
-ENV WINETRICKS https://raw.githubusercontent.com/monokrome/docker-wine/master/bin/winetricks
-ENV XVFBR https://raw.githubusercontent.com/monokrome/docker-wine/master/bin/xvfb-run
 
 RUN set -x \
 	# Install, update & upgrade packages
@@ -21,8 +19,6 @@ RUN set -x \
 	&& mkdir -p "${STEAMAPPDIR}" \
 	# Add entry script
 	&& wget --max-redirect=30 "${DLURL}/main/etc/entry.sh" -O "${HOMEDIR}/entry.sh" \
-	&& wget --max-redirect=30 "${WINETRICKS}" -O "/usr/local/bin/winetricks" \
-	&& wget --max-redirect=30 "${XVFBR}" -O "/usr/local/bin/xvfb-run" \
 	&& { \
 		echo '@ShutdownOnFailedCommand 1'; \
 		echo '@NoPromptForPassword 1'; \
