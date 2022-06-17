@@ -1,0 +1,1 @@
+docker run -d -it --name vrising-container -v "$(pwd)"/vrising-storage:/server vrising
