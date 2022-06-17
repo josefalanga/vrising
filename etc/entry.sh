@@ -8,8 +8,6 @@ bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 				+app_update "${STEAMAPPID}" \
 				+quit
 
-mkdir "${STEAMAPPDIR}/save-data/Settings" || true  
-
 ##TODO: Get the actual vrising config dynamically
 # Is the config missing?
 # if [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/cfg/server.cfg" ]; then
@@ -24,4 +22,4 @@ cd "${STEAMAPPDIR}"
 
 export WINEARCH=win64
 
-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine VRisingServer.exe -persistentDataPath /server -logFile server.log 
+xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine VRisingServer.exe -persistentDataPath ./save-data -logFile server.log 

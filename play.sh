@@ -1,1 +1,1 @@
-docker run -d -it --name vrising-container -v "$(pwd)"/vrising-storage:/server vrising
+docker run -d -it --name vrising-container -v vrising-storage:/home/steam/vrising-server-dedicated/save-data vrising
