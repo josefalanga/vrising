@@ -51,7 +51,6 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		wine \
-		wine32 \
 		xvfb \
 		wget\
 		ca-certificates\
