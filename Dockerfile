@@ -104,8 +104,5 @@ WORKDIR ${HOMEDIR}
 
 CMD ["bash", "entry.sh"]
 
-##TODO: THIS LOOKS MODIFIABLE
 # Expose ports
-# EXPOSE 27015/tcp \
-# 	27015/udp \
-# 	27020/udp
+EXPOSE 27015/tcp 27036/tcp 27015-27016/udp 27031-27036/udp
