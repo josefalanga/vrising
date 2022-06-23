@@ -51,6 +51,7 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		screen \
+		nano \
 		htop \
 		wine \
 		xvfb \
