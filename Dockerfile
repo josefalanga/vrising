@@ -6,18 +6,28 @@ ARG PUID=1000
 ENV USER steam
 ENV HOMEDIR "/home/${USER}"
 ENV STEAMCMDDIR "${HOMEDIR}/steamcmd"
+ENV STEAMAPPID 1829350
+ENV STEAMAPP vrising-server
+ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
 
 RUN set -x \
 	# Install, update & upgrade packages
+	&& dpkg --add-architecture i386 \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
-                lib32stdc++6 \
-                lib32gcc-s1 \
-                wget\
-                ca-certificates \
-                nano \
-                curl \
-                locales \
+		screen \
+		htop \
+		wine \
+		xvfb \
+		wget\
+		ca-certificates\
+		lib32z1\
+		lib32stdc++6 \
+		lib32gcc-s1 \
+		ca-certificates \
+		nano \
+		curl \
+		locales \
 	&& sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
 	&& dpkg-reconfigure --frontend=noninteractive locales \
 	# Create unprivileged user
@@ -34,32 +44,18 @@ RUN set -x \
 	# Symlink steamclient.so; So misconfigured dedicated servers can find it
 	&& ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so" \
 	# Clean up
-        && apt-get remove --purge --auto-remove -y \
-                wget \
-        && rm -rf /var/lib/apt/lists/*
+	&& apt-get remove --purge --auto-remove -y \
+			wget \
+	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${STEAMCMDDIR}
 
-ENV STEAMAPPID 1829350
-ENV STEAMAPP vrising-server
-ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
-ENV DLURL https://raw.githubusercontent.com/josefalanga/vrising
+# Add entry script
+COPY etc/entry.sh ${HOMEDIR}/
 
 RUN set -x \
 	# Install, update & upgrade packages
-	&& dpkg --add-architecture i386 \
-	&& apt-get update \
-	&& apt-get install -y --no-install-recommends --no-install-suggests \
-		screen \
-		htop \
-		wine \
-		xvfb \
-		wget\
-		ca-certificates\
-		lib32z1\
 	&& mkdir -p "${STEAMAPPDIR}" \
-	# Add entry script
-	&& wget --max-redirect=30 "${DLURL}/main/etc/entry.sh" -O "${HOMEDIR}/entry.sh" \
 	&& { \
 		echo '@ShutdownOnFailedCommand 1'; \
 		echo '@NoPromptForPassword 1'; \
@@ -69,33 +65,7 @@ RUN set -x \
 		echo 'quit'; \
 	   } > "${HOMEDIR}/${STEAMAPP}_update.txt" \
 	&& chmod +x "${HOMEDIR}/entry.sh" \
-	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" "${HOMEDIR}/${STEAMAPP}_update.txt" \
-	# Clean up
-	&& rm -rf /var/lib/apt/lists/* 
-
-##TODO: THIS LOOKS DELETEABLE
-# ENV SRCDS_FPSMAX=300 \
-# 	SRCDS_TICKRATE=128 \
-# 	SRCDS_PORT=27015 \
-# 	SRCDS_TV_PORT=27020 \
-# 	SRCDS_CLIENT_PORT=27005 \
-# 	SRCDS_NET_PUBLIC_ADDRESS="0" \
-# 	SRCDS_IP="0" \
-# 	SRCDS_LAN="0" \
-# 	SRCDS_MAXPLAYERS=14 \
-# 	SRCDS_TOKEN=0 \
-# 	SRCDS_RCONPW="changeme" \
-# 	SRCDS_PW="changeme" \
-# 	SRCDS_STARTMAP="de_dust2" \
-# 	SRCDS_REGION=3 \
-# 	SRCDS_MAPGROUP="mg_active" \
-# 	SRCDS_GAMETYPE=0 \
-# 	SRCDS_GAMEMODE=1 \
-# 	SRCDS_HOSTNAME="New \"${STEAMAPP}\" Server" \
-# 	SRCDS_WORKSHOP_START_MAP=0 \
-# 	SRCDS_HOST_WORKSHOP_COLLECTION=0 \
-# 	SRCDS_WORKSHOP_AUTHKEY="" \
-# 	ADDITIONAL_ARGS=""
+	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" "${HOMEDIR}/${STEAMAPP}_update.txt"
 
 # Switch to user
 USER ${USER}
