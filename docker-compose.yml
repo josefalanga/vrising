@@ -1,12 +1,12 @@
 version: '3.3'
 services:
   vrising:
-    # build: . # Build from Dockerfile
+    build: .
     container_name: vrising
-    image: trueosiris/vrising
+    # image: trueosiris/vrising
     network_mode: bridge
     environment:
-      - TZ=America/Argentina
+      - TZ=America/Argentina/Mendoza
       - SERVERNAME=Pandemonium
       - GAMEPORT=27015
       - QUERYPORT=27016
