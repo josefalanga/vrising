@@ -51,7 +51,7 @@ RUN set -x \
 WORKDIR ${STEAMCMDDIR}
 
 # Add entry script
-COPY etc/entry.sh ${HOMEDIR}/
+COPY entry.sh ${HOMEDIR}/
 
 RUN set -x \
 	# Install, update & upgrade packages
@@ -73,6 +73,3 @@ USER ${USER}
 WORKDIR ${HOMEDIR}
 
 CMD ["bash", "entry.sh"]
-
-# Expose ports
-EXPOSE 27015/tcp 27036/tcp 27015-27016/udp 27031-27036/udp 9876 9877 25575
